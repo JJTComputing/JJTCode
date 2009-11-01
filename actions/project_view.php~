@@ -1,0 +1,32 @@
+<form action="" class="jNice">
+<table border="1">
+	<tr>
+		<th>Project Name</th>
+		<th>Description</th>
+		<th>Last Modified</th>
+	</tr>
+
+<?php
+// Load up the projects data from the MySQL table
+$table = jjtsql_field_array_load("projects", "visible", "1");
+
+foreach ($table as $value)
+{
+	echo '<tr>';
+	echo '<td><a href="/?action=file_list&amp;project_id='.$value['id'].'">'.$value['project_name'].'</a></td>';
+	echo '<td>'.$value['description'].'</td>';
+	echo '<td>'.date("r", $value['last_modified']).'</td>';
+	echo '</tr>';
+}
+?>
+</table>
+<?php
+// If they can create projects, let them!
+if ($_SESSION['level']>2)
+{
+	 echo '<h3><a href="/?action=project_create">Create New Project</a></h3>';
+}
+?>
+<br />
+</form>
+	

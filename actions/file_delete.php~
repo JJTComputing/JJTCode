@@ -1,0 +1,22 @@
+<?php
+// Validate!
+$file_id = trim($_REQUEST['file_id']);
+$file_id = preg_replace("[^0-9]", "", $file_id);
+
+// Get the project_id so the last_modified can be updated
+$query="SELECT project_id FROM files WHERE file_id = '$file_id'";
+$result=mysql_query($query);
+$project_id=mysql_result($result, 0, "project_id");
+
+// Delete the file
+$query="DELETE FROM files WHERE file_id = '$file_id'";
+mysql_query($query);
+
+// Update the 'last_modified'
+$query="UPDATE projects SET last_modified = NULL WHERE id = '$project_id'";
+mysql_query($query);
+// End insert data
+?>
+<script language="javascript" type="text/javascript">
+window.location = "/?action=project_view";
+</script>

@@ -1,0 +1,23 @@
+<?php
+// Load up the users info!
+$users=jjtsql_table_field_array_load("users");
+
+// Make the table
+?>
+<table border="1">
+<tr>
+<th>Username</th>
+<th>Profile</th>
+<th>Permissions</th>
+</tr>
+<?php
+foreach ($users as $value)
+{
+	echo '<tr>';
+	echo '<td>'.$value['username'].'</td>';
+	echo '<td><a href="/?action=user_profile&amp;user_id='.$value['id'].'">View Projects</a></td>';
+	echo '<td><a href="/?action=user_permissions&amp;user_id='.$value['id'].'">Permissions</a></td>';
+	echo '</tr>';
+}
+?>
+</table>
