@@ -1,5 +1,28 @@
 <?php
-
+/*
+ * All the non JJTSQL functions are contained in this script
+ * 
+ * bool login_check()
+ * Checks to see whether the user is logged in. It does not check whether they are banned, or what their
+ * level is.
+ * 
+ * array get_users()
+ * Returns a list of all the users in the database
+ * 
+ * array get_user_info($user_id)
+ * Returns a particular user's info
+ * 
+ * int get_project_level($user_id, $project_id, $validate=true)
+ * Gets the users level for a project, whether they have a special level or just the standard one. It will also
+ * validate the input unless validate is specified to be false
+ * 
+ * string check_email_address($email)
+ * Makes sure an email address is valid and returns the validated string.
+ * 
+ * bool mail_send($user_id, $sending_user, $title, $message)
+ * Sends a private message to the specified user
+ *
+ */
 function login_check()
 {
 
@@ -115,5 +138,6 @@ $domain_array[$i])) {
 
 function mail_send($user_id, $sending_user, $title, $message)
 {
+	
 }
 
