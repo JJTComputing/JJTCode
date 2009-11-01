@@ -1,0 +1,12 @@
+# mod_rewrite stuff
+# This tells Apache to ignore all the image, css and javascript files so the browser can get the styles
+IndexIgnore *.gif *.jpg *.png *.css *.js
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*) /index.php?url=$1
+</IfModule>
+
