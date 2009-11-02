@@ -20,7 +20,9 @@
  * Makes sure an email address is valid and returns the validated string.
  * 
  * bool mail_send($user_id, $sending_user, $title, $message)
- * Sends a private message to the specified user
+ * Sends a private message to the specified user. This function assumes validation has occured outside
+ * the function and the passed variables are sanitized
+ *
  *
  */
 function login_check()
@@ -136,8 +138,25 @@ $domain_array[$i])) {
   return true;
 }
 
-function mail_send($user_id, $sending_user, $title, $message)
+function message_send($user_id_to, $user_id_from, $title, $content)
 {
+	// Generate the time for the message
+	$time = time();
 	
+	// Set up the query
+	$query="INSERT INTO messages VALUES ('$user_id_to', '$user_id_from', '$content', '$time', '0', NULL)";
+	
+	// Do the query on the database
+	$result=mysql_query($query);
+	
+	// Check to see whether the query has succeeded
+	if ($result)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
