@@ -34,7 +34,7 @@ else
 	{
 		echo '<tr>';
 		echo '<td class="action"><a href="/?action=user_profile&amp;user_id='.$value['id'].'" class="view">'.$value['username'].'</a></td>';
-		echo '<td class="action"><a href="/?action=user_permissions&amp;user_id='.$value['id'].'" clas>Permissions</a></td>';
+		echo '<td class="action"><a href="/?action=user_permissions&amp;user_id='.$value['id'].'" class="delete">Permissions</a></td>';
 		echo '</tr>';
 	}
 	?>

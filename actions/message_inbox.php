@@ -24,6 +24,7 @@ else
 		echo '<tr>
 			<th>From</th>
 			<th>Title</th>
+			<th>Status</th>
 			</tr>';
 		// Show the users messages
 		while ($message=mysql_fetch_assoc($result))
