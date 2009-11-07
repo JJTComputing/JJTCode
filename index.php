@@ -43,6 +43,7 @@ if (!login_check())
 			if (login_check())
 			{
 				echo '<li id="users"><a href="/?action=user_view"><img src="/icon/users.png" />USERS</a></li>';
+				echo'<li id="message"><a href="/?action=message_inbox"><img src="/icon/message.png" />MESSAGING</a></li>';
 				echo '<li class="logout"><a href="/logout.php">LOGOUT<img src="/icon/logout.png" /></a></li>';
 			}
 			// If the user is not logged in, just show them the login button

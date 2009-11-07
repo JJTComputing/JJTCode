@@ -7,7 +7,7 @@ if (!login_check)
 else
 {
 	// Load up their messages from the database in order of time sent
-	$query="SELECT messages.title, messages.status,  users.username FROM messages, users WHERE messages.user_id_to = '$_SESSION[user_id]' AND users.id = messages.user_id_from ORDER BY time_sent DESC";
+	$query="SELECT messages.title, messages.status,  users.username, messages.message_id, messages.user_id_from FROM messages, users WHERE messages.user_id_to = '$_SESSION[user_id]' AND users.id = messages.user_id_from ORDER BY time_sent DESC";
 	$result=mysql_query($query);
 	
 	echo '<h2>Messages</h2>';
@@ -24,14 +24,13 @@ else
 		echo '<tr>
 			<th>From</th>
 			<th>Title</th>
-			<th>Status</th>
 			</tr>';
 		// Show the users messages
 		while ($message=mysql_fetch_assoc($result))
 		{
 			echo '<tr>';
-			echo '<td>'.$message['username'].'</td>';
-			echo '<td>'.$message['title'].'</td>';
+			echo '<td class="action"><a href="/?action=user_profile&amp;user_id='.$message['user_id_from'].'" class="delete">'.$message['username'].'</a></td>';
+			echo '<td class="action"><a href="/?action=message_view&amp;message_id='.$message['message_id'].'" class="view">'.$message['title'].'</a></td>';
 			echo '</tr>';
 		}
 		

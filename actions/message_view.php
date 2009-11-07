@@ -23,9 +23,9 @@ else
 		// If the message exists, get the data from the database
 		$message=mysql_fetch_assoc($result);
 		
-		echo '<h2>Private Messages</h2>';
+		echo '<h2>Messages</h2>';
 		echo '<h3>'.$message['title'].'</h3>';
-		echo $message['content'];
+		echo '<textarea style="width:900px; height:500px;">'.$message['content'].'</textarea>';
 	}
 }
 	
