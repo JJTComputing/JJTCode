@@ -1,5 +1,7 @@
 <?php
 /*
+ * functions.php - JJTCode
+ * 
  * All the non JJTSQL functions are contained in this script
  * 
  * bool login_check()
@@ -144,7 +146,7 @@ function message_send($user_id_to, $user_id_from, $title, $content)
 	$time = time();
 	
 	// Set up the query
-	$query="INSERT INTO messages VALUES ('$user_id_to', '$user_id_from', '$content', '$time', '0', NULL)";
+	$query="INSERT INTO messages VALUES ('$user_id_to', '$user_id_from', '$title', '$content', '$time', '0', NULL)";
 	
 	// Do the query on the database
 	$result=mysql_query($query);

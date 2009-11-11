@@ -46,9 +46,7 @@ else
 	</script>
 	<form class="jNice" action="/" method="POST">
 	<h3><?php echo $file['filename'].'.'.$file['extension'].'</h3>'; ?>
-	<textarea style="width:900px; height:600px;  text-indent:0px;" id="textarea" name="content">
-	<?php echo $file['content']; ?>
-	</textarea>
+	<textarea style="width:900px; height:600px;  text-indent:0px;" id="textarea" name="content"><?php echo $file['content']; ?></textarea>
 	<input type="submit" value="Edit" />
 	<input type="hidden" name="action" value="file_do" />
 	<input type="hidden" name="do" value="edit" />

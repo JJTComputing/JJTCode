@@ -44,9 +44,7 @@ else
 	</script>
 	<form id="jNice">
 	<h3><?php echo $file['filename'].'.'.$file['extension'].'</h3>'; ?>
-	<textarea style="width: 900px; height: 600px;" id="textarea">
-	<?php echo $file['content']; ?>
-	</textarea>
+	<textarea style="width: 900px; height: 600px;" id="textarea"><?php echo $file['content']; ?></textarea>
 	</form>
 	<?php
 }

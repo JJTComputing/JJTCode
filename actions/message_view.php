@@ -1,4 +1,18 @@
 <?php
+/* message_view.php - JJTCode
+ * 
+ * Purpose:
+ * Shows the message that the user has sent according to the message_id sent
+ * 
+ * Recevies from:
+ * 1. message_inbox when user clicks on message title - message_id via GET
+ * 
+ * Sends to:
+ * 
+ * 
+ * Requires login: YES
+ * 
+ */
 // If the user is not logged in, they will have no messages to view!
 if (!login_check())
 {
@@ -28,4 +42,8 @@ else
 		echo '<textarea style="width:900px; height:500px;">'.$message['content'].'</textarea>';
 	}
 }
+?>
+<br /><br />
+<a href="/?action=message_create&amp;message_id=<?php echo $message_id; ?>&amp;user_id_to=<?php echo $message['user_id_from']; ?>"><button class="" type="submit" name="" id=""><span><span>Reply</span></span></button></a>
+<br /><br /><br />
 	

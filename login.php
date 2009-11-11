@@ -52,11 +52,11 @@ else
 
 // Validate!
 $user=array(
-user=>trim(addslashes($_POST['user'])),
+user=>addslashes($_POST['user']),
 pass=>addslashes($_POST['pass']),
 md5=>md5($_POST['pass']), //Load the data into an array
 );
-  
+
 // All the data validation has been done, so lets see about the username and password
 $query="SELECT * FROM users WHERE login = '$user[user]'";
 $result=mysql_query($query);

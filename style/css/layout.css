@@ -297,6 +297,11 @@ display: block;
 text-decoration: none;
 }
 
+/* Message stuff */
+#from {
+width: 50px;
+}
 
-
-
+#title {
+width: 500px;
+}

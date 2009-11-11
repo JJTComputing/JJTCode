@@ -1,4 +1,7 @@
 <?php
+/*
+ * Lists all the users in the database, and offers links to their profiles and permission pages
+ */
 if (!defined("jjtcode"))
 {
   die("Hacking Attempt!");
