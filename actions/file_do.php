@@ -163,6 +163,7 @@ else
 		<script language="javascript" type="text/javascript">
 		window.location = "/?action=file_edit&file_id=<?php echo $file_id; ?>";
 		</script>
+		<noscript>Please click <a href="/?action=file_edit&amp;file_id=<?php echo $file_id; ?>">here</a> to continue.</noscript>
 		<?php
 	}
 }

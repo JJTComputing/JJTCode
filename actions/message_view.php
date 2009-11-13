@@ -40,10 +40,11 @@ else
 		echo '<h2>Messages</h2>';
 		echo '<h3>'.$message['title'].'</h3>';
 		echo '<textarea style="width:900px; height:500px;">'.$message['content'].'</textarea>';
+		echo '<br /><br />
+		<a href="/?action=message_create&amp;message_id='.$message_id.'&amp;user_id_to='.$message['user_id_from'].'"><button class="" type="submit" name="" id=""><span><span>Reply</span></span></button></a>
+		<br /><br /><br />';
 	}
 }
 ?>
-<br /><br />
-<a href="/?action=message_create&amp;message_id=<?php echo $message_id; ?>&amp;user_id_to=<?php echo $message['user_id_from']; ?>"><button class="" type="submit" name="" id=""><span><span>Reply</span></span></button></a>
-<br /><br /><br />
+
 	

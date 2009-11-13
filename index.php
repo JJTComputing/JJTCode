@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting(-1);
 // Start the session!
 session_start();
 
@@ -63,10 +63,6 @@ if (!login_check())
         		  
                 <!-- // #sidebar -->
                 
-                <!-- h2 stays for breadcrumbs 
-                <h2><a href="/">Dashboard</a> &raquo; 
-				<a href="#" class="active">Print resources</a></h2> -->
-                
                 <div id="main">
 				<br />
                 	<?php
@@ -95,12 +91,17 @@ if (!login_check())
 						////////////////////////////////////////////////////
 					}
 					
-					// But there is nothing to do, load the home page!
+					// But there is nothing to do, and they are logged in, show the dashboard!
+					elseif (login_check())
+					{
+						require("actions/dashboard.php");
+					}
+					
+					// And finally, if there is nothing to do, and they aren't logged in, show the home page!
 					else
 					{
 						require("actions/index.php");
 					}
-					
 					?>
 					<br />
                 </div>

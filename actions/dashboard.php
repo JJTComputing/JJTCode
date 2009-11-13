@@ -28,8 +28,50 @@ else
 	// Now we load all the users info up out of the database
 	
 	// Projects using a handy SQL join to get their names, where the user is at least a moderator
-	$query="SELECT * FROM projects, project_users WHERE project_users.user_id = '$_SESSION[user_id]'";
+	$query="SELECT projects.id, projects.project_name, projects.last_modified FROM projects, project_users WHERE project_users.user_id = '$_SESSION[user_id]' AND projects.id = project_users.project_id AND project_users.level > 2";
 	$result=mysql_query($query);
-	echo '<h2>Dashboard</h2>';
-	echo '<p>Welcome to JJTCode.</p>';
-	echo '<h3>
+	
+	// Show the title
+	?>
+	<h2>Dashboard</h2>
+	<p>Welcome to JJTCode.</p>
+	<h3>Projects</h3>
+	<form action="" class="jNice">
+	<table border="1">
+		<tr>
+			<th>Project Name</th>
+			<th>Last Modified</th>
+		</tr>
+	<?php
+	while ($project=mysql_fetch_assoc($result))
+	{
+		echo '<tr>';
+		echo '<td class="action"><a href="/?action=project_view&amp;project_id='.$project['id'].'" class="view">'.$project['project_name'].'</a></td>';
+		echo '<td class="action"><a href="/?action=file_list&amp;project_id='.$project['id'].'" class="edit">'.date("r", $project['last_modified']).'</a></td>';
+		echo '</tr>';
+	}
+	echo '</table>';
+	
+	// Now for the private messages
+	$query="SELECT users.username, messages.title, messages.time_sent, messages.message_id FROM messages, users WHERE messages.user_id_to = '$_SESSION[user_id]' AND users.id = messages.user_id_from ORDER BY time_sent DESC LIMIT 0, 4";
+	$result=mysql_query($query);
+	?>
+	<br />
+	<h3>Messages</h3>
+	<table border="1">';
+	<tr>
+		<th id="from">From</th>
+		<th id="title">Title</th>
+		<th id="time">Time Sent</th>
+	</tr>
+	<?php
+	while ($message=mysql_fetch_assoc($result))
+	{
+		echo '<tr>';
+		echo '<td class="action">'.$message['username'].'</td>';
+		echo '<td class="action"><a href="/?action=message_view&amp;message_id='.$message['message_id'].'" class="view">'.$message['title'].'</a></td>';
+		echo '<td class="action">'.date("r", $message['time_sent']).'</td>';
+		echo '</tr>';
+	}
+	echo '</table>';
+}
