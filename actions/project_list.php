@@ -1,4 +1,18 @@
 <?php
+/* project_list.php - JJTCode
+ * 
+ * Purpose:
+ * To show a list of all the projects marked as 'visible' in the database for all
+ * to view.
+ * 
+ * Receives From:
+ * 
+ * Sends To:
+ * 1. project_view when user clicks on 'Profile' - sends the project_id via GET
+ * 2. file_list when user clicks on project name - sends the project_id via GET
+ * 
+ * Requires Login: NO
+ */
 if (!defined("jjtcode"))
 {
   die("Hacking Attempt!");
