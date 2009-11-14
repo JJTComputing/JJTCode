@@ -10,6 +10,7 @@
  * Sends To:
  * 1. project_view when user clicks on 'Profile' - sends the project_id via GET
  * 2. file_list when user clicks on project name - sends the project_id via GET
+ * 3. project_search when user submits form
  * 
  * Requires Login: NO
  */
@@ -18,7 +19,7 @@ if (!defined("jjtcode"))
   die("Hacking Attempt!");
 }
 ?>
-<form action="" class="jNice">
+<form action="/" class="jNice" method="GET">
 <table border="1">
 	<tr>
 		<th>Project Name</th>
@@ -50,5 +51,8 @@ if ($_SESSION['level']>=2)
 }
 ?>
 <br />
+<label>Search: </label><input type="text" name="search" class="text-long"/><br />
+<input type="hidden" name="action" value="project_search" />
+<input type="submit" value="Search" />
 </form>
 	
