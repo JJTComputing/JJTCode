@@ -10,10 +10,11 @@ require("sources/jjtsql.php");
 require("sources/sql.php");
 require("sources/functions.php");
 
-// If the person is not logged in, they are a guest and so we give them a user id of 1
+// If the person is not logged in, they are a guest and so we give them a user id of 0
 if (!login_check())
 {
 	$_SESSION['user_id']=0;
+	$_SESSION['level']=1;
 }
 ?>
 
@@ -113,7 +114,7 @@ if (!login_check())
         </div>	
         <!-- // #containerHolder -->
         
-        <p id="footer">JJTComputing, unless mentioned, does not create, endorse, or control the code that is on the website. Use at your own risk!</p>
+        <p id="footer">JJTComputing, unless mentioned, does not create, endorse, or control the code that is on the website. Use at your own risk! <br />&copy; JJTComputing 2009</p>
     </div>
     <!-- // #wrapper -->
 </body>

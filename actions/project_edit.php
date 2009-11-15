@@ -27,8 +27,8 @@ else
 	
 	echo '<form action="/" class="jNice" method="POST">';
 	echo '<fieldset>';
-	echo '<p>Project Name: <input type="text" name="project_name" value="'.$project['project_name'].'" class="text-long" /></p>';
-	echo '<p>Project Description: <textarea name="description">'.$project['description'].'</textarea></p>';
+	echo '<p><label>Project Name:</label> <input type="text" name="project_name" value="'.$project['project_name'].'" class="text-long" /></p>';
+	echo '<p><label>Project Description:</label> <textarea name="description">'.$project['description'].'</textarea></p>';
 	echo '<p><input type="submit" value="Edit" /></p>';
 	echo '</fieldset>';
 	echo '<input type="hidden" name="action" value="project_do" />';

@@ -8,6 +8,9 @@ require("sources/functions.php");
 $query="SELECT * FROM ip WHERE ip = '$_SERVER[REMOTE_ADDR]'";
 $result=mysql_query($query);
 
+// Get the UNIX timestamp
+$time=time();
+
 if (mysql_num_rows($result)>0) 
 {
 	// Load up the data from the MySQL database
@@ -16,12 +19,8 @@ if (mysql_num_rows($result)>0)
 	// See how many times they have attempted to login
 	if ($row['attempts']>=3)
 	{
-	    
-	    // And convert it into a UNIX one
-	    $time=strtotime($row['time']);
-	
         // If they voided the 3 attempts limit over an hour ago, let them try again
-        if ($time<time()-3600)
+        if ($row['time']<time()-3600)
         {
 	        mysql_query("DELETE FROM ip WHERE ip = '$_SERVER[REMOTE_ADDR]'"); 
 		}
@@ -29,8 +28,9 @@ if (mysql_num_rows($result)>0)
 		else
 		{
 			//Update the ip time and show them an error message!
-			mysql_query("UPDATE ip SET time = NULL WHERE ip = $_SERVER[REMOTE_ADDR]"); 
-			die("You have exceeded the maximum amount of logins. Please wait an hour before trying again."); 
+			mysql_query("UPDATE ip SET time = '$time' WHERE ip = $_SERVER[REMOTE_ADDR]"); 
+			header("Location: /?action=login_error&error=ip");
+			die();
 		}
 	}
 }
@@ -38,16 +38,16 @@ if (mysql_num_rows($result)>0)
 else
 {
 	// If the user does not exist in the IP table, create them!
-	mysql_query("INSERT INTO ip VALUES ('$_SERVER[REMOTE_ADDR]', NULL, '0')");
+	mysql_query("INSERT INTO ip VALUES ('$_SERVER[REMOTE_ADDR]', '$time', '0')");
 	$row['attempts']=0;
 	/* And while we're here, we will do a bit of cleaning up and make sure there are no redundant rows in 
 	 the table.
 	  
 	 In order to do this, we will delete all rows that have a timestamp from over an hour ago */
 	
-	mysql_query("DELETE FROM ip WHERE time < ADDDATE(NOW(), INTERVAL -24HOUR");
+	mysql_query("DELETE FROM ip WHERE time > '$time+3600'");
 }
-	 
+$row['attempts']++; 
 //End anti-brute force
 
 // Validate!
@@ -58,22 +58,15 @@ md5=>md5($_POST['pass']), //Load the data into an array
 );
 
 // All the data validation has been done, so lets see about the username and password
-$query="SELECT * FROM users WHERE login = '$user[user]'";
+$query="SELECT * FROM users WHERE login = '$user[user]' AND password = '$user[pass]'";
 $result=mysql_query($query);
-$sql=mysql_fetch_assoc($result);
 
-// If the username does not exist, stop!
+// If the username or password does not exist, stop!
 if (mysql_num_rows($result)==0)
 {
-	mysql_query("UPDATE ip SET attempts = '$row[attempts]', time=NULL WHERE ip = '$_SERVER[REMOTE_ADDR]'");
-    die("The given username/password is incorrect");
-}
-
-// If the passwords do not match, stop!
-if ($sql['password']!=$user['md5'])
-{
-	mysql_query("UPDATE ip SET attempts = '$row[attempts]', time=NULL WHERE ip = '$_SERVER[REMOTE_ADDR]'");
-    die("The given username/password is incorrect");
+	mysql_query("UPDATE ip SET attempts = '$row[attempts]', time='$time' WHERE ip = '$_SERVER[REMOTE_ADDR]'");
+    header("Location: /?action=login_error&error=username");
+    die();
 }
 
 // If they have got this far, everything is fine, so lets login!
@@ -85,7 +78,7 @@ mysql_query("DELETE FROM ip WHERE ip = '$_SERVER[REMOTE_ADDR]'");
 $_SESSION['user']=$sql['username'];
 $_SESSION['user_id']=$sql['id'];  
 $_SESSION['level']=intval($sql['level']); 
-setcookie("user", $sql['username'], time()+3600);
+setcookie("user", $sql['username'], $time+3600);
 
 // Now we redirect them to the home page!
 header("Location: /");

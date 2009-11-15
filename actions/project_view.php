@@ -63,7 +63,7 @@ else
 	
 	// Now the full blown admins
 	echo '<h3>Administrators</h3>';
-	for ($i=0; $i<$num && $user['level']==5; $i++)
+	for ($i=0; $i<$num && $user['level']==4; $i++)
 	{
 		echo '<a href="/?action=user_profile&amp;user_id='.$user['user_id'].'">'.$user['username'].'</a>';
 		echo '<br />';

@@ -50,9 +50,11 @@ if ($_SESSION['level']>=2)
 	 echo '<a href="/?action=project_create"><button class="" type="submit" name="" id=""><span><span>Create Project</span></span></button></a>';
 }
 ?>
-<br />
-<label>Search: </label><input type="text" name="search" class="text-long"/><br />
+<br /><br /><br />
+<fieldset>
+<label>Search: </label><input type="text" name="search" class="text-long" /><br />
 <input type="hidden" name="action" value="project_search" />
 <input type="submit" value="Search" />
+</fieldset>
 </form>
 	

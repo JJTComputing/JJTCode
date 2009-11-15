@@ -1,4 +1,18 @@
 <?php
+/* user_permissions.php - JJTCode
+ * 
+ * Purpose:
+ * To enable a user who is a project admin to be able to edit the permissions of other 
+ * project users
+ * 
+ * Receives From:
+ * 1. project_view - project_id when user clicks on 'edit_permissions'
+ * 
+ * Sends To:
+ * 1. user_permissions_do - project_id, user_id, level via POST when user submits form
+ *  
+ * Requires Login: YES
+ */
 if (!defined("jjtcode"))
 {
   die("Hacking Attempt!");
