@@ -26,7 +26,7 @@ else
 	$search = preg_replace("[^0-9A-Za-z]", "", $_GET['search']);
 	
 	// Have a lookie in the MySQL database for their search term
-	$query="SELECT * FROM projects WHERE project_name LIKE '%$search%' OR description LIKE '%$search%'";
+	$query="SELECT * FROM projects WHERE project_name LIKE '%$search%' OR description LIKE '%$search%' AND visible = '1'";
 	$result=mysql_query($query);
 	
 	// Check whether we have any results: otherwise the table gets messed up if we don't

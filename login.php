@@ -58,7 +58,7 @@ md5=>md5($_POST['pass']), //Load the data into an array
 );
 
 // All the data validation has been done, so lets see about the username and password
-$query="SELECT * FROM users WHERE login = '$user[user]' AND password = '$user[pass]'";
+$query="SELECT * FROM users WHERE login = '$user[user]' AND password = '$user[md5]'";
 $result=mysql_query($query);
 
 // If the username or password does not exist, stop!
@@ -70,6 +70,9 @@ if (mysql_num_rows($result)==0)
 }
 
 // If they have got this far, everything is fine, so lets login!
+
+// Fetch their info from the MySQL database
+$sql = mysql_fetch_assoc($result);
 
 // Just delete their IP from the database, no point keeping it now 
 mysql_query("DELETE FROM ip WHERE ip = '$_SERVER[REMOTE_ADDR]'");
