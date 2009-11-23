@@ -23,7 +23,7 @@ else
 	// If we do not have a match, tell the user
 	if (mysql_num_rows($result)==0)
 	{
-                echo '<h2>Error</h2>'
+        echo '<h2>Error</h2>';
 		echo '<p>Your code is invalid</p>';
 	}
 	

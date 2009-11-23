@@ -45,7 +45,7 @@ else
 	echo '<p>Last Modified on: '.date("r", $project['last_modified']).'</p>';
 	
 	// Find out the project administrators and moderators
-	$query="SELECT users.username, project_users.level, project_users.user_id FROM project_users, users WHERE project_users.project_id = '$project_id' AND project_users.level > 3 AND users.id=project_users.user_id ORDER BY project_users.level ASC";
+	$query="SELECT users.username, project_users.level, project_users.user_id FROM project_users, users WHERE project_users.project_id = '$project_id' AND project_users.level > 2 AND users.id=project_users.user_id ORDER BY project_users.level ASC";
 	$result=mysql_query($query);
 	$num=mysql_num_rows($result);
 	// Right now we show the users the people involved in this project
@@ -53,7 +53,7 @@ else
 	// Firstly the moderators: so loop around the array: its ordered by level by the database so level 4 will come first
 	echo '<h3>Moderators</h3>';
 	$user=mysql_fetch_assoc($result);
-	for ($i=0; $i<$num && $user['level']==4; $i++) 
+	for ($i=0; $i<$num && $user['level']==3; $i++) 
 	{
 		echo '<a href="/?action=user_profile&amp;user_id='.$user['user_id'].'">'.$user['username'].'</a>';
 		echo '<br />';

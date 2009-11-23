@@ -1,4 +1,18 @@
 <?php
+/* project_do.php - JJTCode
+ * 
+ * Purpose:
+ * Creates and Deletes projects
+ * 
+ * Receives From:
+ * 1. project_create - pretty much everything about the project is about. project_name, description, level, visible
+ * 2. project_view - project_id and the instruction to delete it!
+ * 
+ * Sends To:
+ * 1. project_view if user is creating/
+ *  
+ * Requires Login: YES
+ */
 if (!defined("jjtcode"))
 {
   die("Hacking Attempt!");
@@ -81,7 +95,6 @@ if ($_REQUEST['do']=="create")
 			// Create the project in the database
 			$query="INSERT INTO projects VALUES ('$project', '$link', '$description', '$time', '$time', '$level', '$visible', '$_SESSION[user_id]', NULL)";
 			mysql_query($query);
-			echo mysql_error();
 	
 			// Give the user administrative rights to the project
 			// Firstly, we need to get the project id

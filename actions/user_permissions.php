@@ -35,6 +35,7 @@ $num = mysql_num_rows($result);
  * confusion and server resources and stop here */
 if ($num == 0)
 {
+	echo '<h2>Error</h2>';
 	echo '<h3>There are no projects where you are allowed to grant others privledges!</h3>';
 }
 
@@ -73,7 +74,7 @@ else
 		echo '<h2>'.$value['project_name'].'</h2>';
 		// Setup the form
 		echo '<form action="/" class="jNice">';
-		echo '<label>Level:</label>';
+		echo '<p>Level:</p>';
 		// Show the drop down menu
 		echo '<select name="level">';
 		echo '<option>';

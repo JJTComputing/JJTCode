@@ -1,4 +1,17 @@
 <?php
+/* index.php - JJTCode
+*
+* Purpose:
+* Load up the required page from the users request, display the template and load up all the configuration
+* files. 
+* 
+* Receives From:
+* 
+* Sends to:
+* 
+* Requires login: NO
+* 
+*/
 error_reporting(-1);
 // Start the session!
 session_start();
@@ -32,6 +45,7 @@ if (!login_check())
 <!-- JavaScripts-->
 <script type="text/javascript" src="style/js/jquery.js"></script>
 <script type="text/javascript" src="style/js/jNice.js"></script>
+
 </head>
 
 <body>

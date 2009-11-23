@@ -101,10 +101,7 @@ else
 		}
 		// But if it isn't, to the insert!
 		else
-		{
-			// Get the time for the last modified
-			$time=time();
-			
+		{	
 			// If the binary variable is not set, then the file is not a binary, but the database needs to know either
 			// way
 			if (!isset($binary))
@@ -112,8 +109,10 @@ else
 				$binary=0;
 			}
 		
+
+			
 			// Insert data into MySQL
-			$query="INSERT INTO files VALUES ('$filename', '$filetype', '$content', NULL, '$project_id', $directory, $binary, NULL)";
+			$query="INSERT INTO files VALUES ('$filename', '$filetype', '$content', '$time', '$project_id', $directory, $binary, NULL)";
 			$result=mysql_query($query);
 			echo mysql_error();
 			
@@ -125,7 +124,7 @@ else
 			// Get the file_id from the MySQL database for the redirect
 			$query="SELECT file_id FROM files WHERE filename = '$filename' AND extension='$filetype' AND project_id='$project_id'";
 			$result=mysql_query($query);
-			echo mysql_error();
+			
 			$file_id=mysql_result($result, 0, "file_id");
 			
 			// Redirect the user to the file edit!
@@ -142,7 +141,7 @@ else
 	{
 		// Load the variables
 		$content=$_POST['content'];
-		$time=time();
+		
 		// End validation
 	
 		// Insert data into MySQL

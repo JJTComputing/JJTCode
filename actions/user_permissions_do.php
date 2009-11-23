@@ -29,19 +29,19 @@ else
 	$old_level=get_project_level($user_id_edited, $project_id, false);
 	if ($old_level!=$level)
 	{
-		$query="SELECT default_level FROM projects WHERE id = '$project_id'";
+		$query="SELECT * FROM projects WHERE id = '$project_id'";
 		$result=mysql_query($query);
-		$default_level=mysql_result($result, 0, "default_level");
-	
+		$project=mysql_fetch_assoc($result);
+		
 		// If the default level is the same as the level they want to change it to, we delete their custom level!
-		if ($default_level==$level)
+		if ($project['default_level']==$level)
 		{
 			$query="DELETE FROM project_users WHERE user_id = '$user_id_edited' AND project_id = '$project_id'";
 			mysql_query($query);
 		}
 		/* If the old level is the same as the default level, we have to create a new row because this is the first time
 		   the user has had a custom level for this project */
-		elseif ($old_level==$default_level)
+		elseif ($old_level==$project['default_level'])
 		{
 			$query="INSERT INTO project_users VALUES ('$user_id_edited', '$project_id', '$level')";
 			mysql_query($query);
@@ -54,10 +54,13 @@ else
 			mysql_query($query);
 		}
 		
+		// Send the user a PM informing them their level has been changed
+		message_send($user_id_edited, $user_id_editing, "Permission Change", "Your permissions on ".$project['project_name']." have been changed to ".$level);
+		
 		// Redirect the user
 		?>
 		<script language="javascript" type="text/javascript">
-		window.location = "/?action=file_view&project_id=<?php echo $project_id; ?>";
+		window.location = "/?action=project_view&project_id=<?php echo $project_id; ?>";
 		</script>
 		<?php
 	}
