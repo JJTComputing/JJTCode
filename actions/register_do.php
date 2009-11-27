@@ -15,6 +15,7 @@ else
 // Here we register the user into the MySQL database
 
 // Perform some validation
+/*
 // BotScout!
 $error="";
 $APIKEY = 'm7XobnTLhfGAPvC';
@@ -57,7 +58,7 @@ if(substr($returned_data, 0,1) == '!'){
 if($botdata[3] > 0 || $botdata[5] > 0){ 
 	$error.="Our system has identified you as a SpamBot. If you are not a bot please contact the administrator.";
 }
-
+*/
 // Make sure there aren't any empty values
 if (empty($_POST['pass1']) || empty($_POST['pass2']))
 {
@@ -146,9 +147,11 @@ else
 		{
 			// Encrypt the password!
 			$password = md5($_POST['pass1']);
-	
-			$query="INSERT INTO users VALUES ('$_POST[login]', '$_POST[username]', '$password', '$_POST[email]', '1', NULL)";
+			
+			// Insert into the JJTCode users database
+			$query="INSERT INTO users VALUES ('$_POST[login]', '$_POST[username]', '$password', '$_POST[email]', '1', NULL, NULL, NULL, NULL, NULL)";
 			$result=mysql_query($query);
+		
 		
 			// Generate a random number to turn into a MD5 hash so we can validate the user's email address
 			$num=rand();

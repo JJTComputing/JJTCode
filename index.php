@@ -119,6 +119,9 @@ if (!login_check())
 					}
 					?>
 					<br />
+					
+					<img src="/v4.png" />
+					
                 </div>
                 <!-- // #main -->
                 

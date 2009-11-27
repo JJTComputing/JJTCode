@@ -77,6 +77,9 @@ $sql = mysql_fetch_assoc($result);
 // Just delete their IP from the database, no point keeping it now 
 mysql_query("DELETE FROM ip WHERE ip = '$_SERVER[REMOTE_ADDR]'");
 
+// Regenerate the session_id - security
+session_regenerate_id();
+
 // Setup all the session variables and the cookies
 $_SESSION['user']=$sql['username'];
 $_SESSION['user_id']=$sql['id'];  
