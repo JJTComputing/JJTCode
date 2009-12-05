@@ -152,15 +152,15 @@ class Ajax_IM {
     * @author Joshua Gross
     **/
    function login($username, $password) {
-      $user = $this->checkInfo($username, $password, array('admin', 'banned'));
+      $user = $this->checkInfo($username, $password, array('level'));
       if(!$user) return 'invalid';
-      if($user['banned'] == 1) return 'banned';
+      if($user['level'] == 0) return 'banned';
 
       $_SESSION['username'] = $username;
       $_SESSION['password'] = $password;
-      $_SESSION['admin']    = $user['admin'];
+      $_SESSION['admin']    = ($user['level']>3 ? 1 : 0);
 
-      $set_status = mysql_query('UPDATE users SET is_online=1, last_ip=\'' . $_SERVER['REMOTE_ADDR'] . '\' WHERE username=\'' . $username . '\'');
+      $set_status = mysql_query('UPDATE users SET is_online=1, last_ip=\'' . $_SERVER['REMOTE_ADDR'] . '\' WHERE login=\'' . $username . '\'');
 
       $buddylist = $this->getBuddylist($username, false);
       $blocklist = $this->getBlocklist($username);
@@ -654,10 +654,13 @@ class Ajax_IM {
       $username = mysql_real_escape_string($username);
       $password = mysql_real_escape_string($password);
       
-      $query = mysql_query('SELECT ' . $columns . ' FROM users WHERE username=\'' . $username . '\' AND password=\'' . $password . '\' LIMIT 1');
+      $query = "SELECT $columns FROM users WHERE login='$username' AND password='$password' LIMIT 1'";
+      $result = mysql_query($query);
       
-      if(mysql_num_rows($query) > 0)
-         return mysql_fetch_assoc($query);
+      if(mysql_num_rows($result) > 0)
+      {
+         return mysql_fetch_assoc($result);
+      }
       else
          return false;
    }

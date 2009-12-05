@@ -7,18 +7,18 @@
  * To contain the classes for projects
  */
  
- if (!defined("jjtcode"))
- {
- 	die("Hacking Attempt");
- }
+if (!defined("jjtcode"))
+{
+	die("Hacking Attempt");
+}
  
- class projects
- {
- 	public $id;
- 	public $level;
- 	public $info;
+class project
+{
+ 	public $id=0;
+ 	public $level=0;
+ 	public $info=0;
  	
- 	private $exists;
+ 	private $exists=false;
  	
  	function __construct($project_id)
  	{
@@ -28,7 +28,7 @@
  		$result=mysql_query($query);
  		
  		// Check whether the project exists
- 		if (!$result || mysql_num_rows($result)==0)
+ 		if (mysql_num_rows($result)==0)
  		{
  			$this->exists=false;
  			return false;
@@ -47,6 +47,7 @@
  	
  	function get_files($directory_id="")
  	{
+ 		
  		// Check if the directory id is empty, if not the user wants to load the files in a directory up!
  		if (!empty($directory_id))
 		{
@@ -75,6 +76,27 @@
 		}
 		
 		return $directory;
+ 	}
+ 	
+ 	function get_level($user)
+ 	{
+		// Check whether this user has any special permissions for this project
+		$query="SELECT * FROM project_users WHERE user_id = '$user->id' AND project_id = '$this->id'";
+		$result=mysql_query($query);
+
+		// If there are special permissions, use them!
+		if (mysql_num_rows($result)>0)
+		{
+			$level=mysql_result($result, 0, "level");
+		}
+		// But if there aren't, use the standard ones
+		else
+		{
+			echo 2;
+			$level=$this->level;
+		}
+		
+		return $level;
  	}
 }
 ?>

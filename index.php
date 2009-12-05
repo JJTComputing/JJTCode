@@ -12,16 +12,16 @@
 * Requires login: NO
 * 
 */
-error_reporting(-1);
+
 // Start the session!
 session_start();
-
 
 define("jjtcode", 0.1);
 // Load up all the function requires
 require("sources/jjtsql.php");
 require("sources/sql.php");
 require("sources/functions.php");
+require("classes/users.php");
 
 // If the person is not logged in, they are a guest and so we give them a user id of 0
 if (!login_check())
@@ -29,6 +29,9 @@ if (!login_check())
 	$_SESSION['user_id']=0;
 	$_SESSION['level']=1;
 }
+
+// Create the user object
+$user = new user($_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -119,9 +122,6 @@ if (!login_check())
 					}
 					?>
 					<br />
-					
-					<img src="/v4.png" />
-					
                 </div>
                 <!-- // #main -->
                 

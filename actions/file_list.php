@@ -4,15 +4,16 @@ if (!defined("jjtcode"))
   die("Hacking Attempt!");
 }
 
-// Validate the project id, because it is used a lot for MySQL
+require("classes/projects.php");
 
-$project_id = trim($_REQUEST['project_id']);
-$project_id = preg_replace("[^0-9]", "", $project_id);
+// Validate the project id, because it is used a lot for MySQL
+$project_id = preg_replace("[^0-9]", "", $_GET['project_id']);
+$project = new project($project_id);
 
 // Get the level of the user, but since we've already validated the project_id we don't need the function to do it again!
-$level = get_project_level($_SESSION['user_id'], $project_id, false);
-
-if (is_bool($level))
+$level = $project->get_level($user);
+echo $level;
+if (is_bool($project))
 {
 	// If the project does not exist, tell them!
 	?>
@@ -40,20 +41,10 @@ else
 	 * 
 	 * But if we have a directory_id sent, then they want to view the directory, so we load that instead!
 	 * */
-
-	if (isset($_REQUEST['directory_id']))
-	{
-		// Validate it!
-		$directory_id = preg_replace("[^0-9]", "", $_REQUEST['directory_id']);
-		
-		$files = jjtsql_table_double_load("files", "project_id", $project_id, "directory_id", $directory_id);
-		$directories = jjtsql_table_double_load("directories", "project_id", $project_id, "parent_id", $directory_id);
-	}
-	else
-	{
-		$files = jjtsql_table_null_load("files", "project_id", $project_id, "directory_id");
-		$directories = jjtsql_table_null_load("directories", "project_id", $project_id, "parent_id");
-	}
+	
+	$files = $project->get_files();
+	$directory = $project->get_directory();
+	
 	// If there are no files in the project, we will get an error with the foreach loop, so we'll stop that now!
 	if (!is_bool($files))
 	{
@@ -93,10 +84,10 @@ else
 			echo '</tr>';
 		}
 		
-			if (!is_bool($directories))
+			if (!is_bool($directory))
 			{
 				
-				foreach ($directories as $value)
+				foreach ($directory as $value)
 				{
 					echo '<tr>';
 					echo '<td><a href="/?action=file_list&amp;project_id='.$project_id.'&amp;directory_id='.$value['directory_id'].'">'.$value['directory'].'</a></td>';
@@ -117,11 +108,11 @@ else
 	
 		<?php
 	}
-	elseif (!is_bool($directories))
+	elseif (!is_bool($directory))
 			{
 				echo '<table>';
 						
-				foreach ($directories as $value)
+				foreach ($directory as $value)
 				{
 					echo '<tr>';
 					echo '<td class="action"><a href="/?action=file_list&amp;project_id='.$project_id.'&amp;directory_id='.$value['directory_id'].'">'.$value['directory'].'</a></td>';
@@ -166,5 +157,4 @@ else
 	
 	
 }
-
 ?>
