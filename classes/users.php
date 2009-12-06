@@ -10,23 +10,8 @@ if (!defined("jjtcode"))
 	die("Hacking Attempt");
 }
 
-class user 
+class user extends jjtcode
 {
-	public $id;
-	public $info; 
-	public $level;
-	
-	function __construct($user_id)
-	{
-		// When the object is made, we gather all the user's info into the object
-		// using the MySQL database
-		$query="SELECT * FROM users WHERE id = '$$user_id'";
-		$result=mysql_query($query);
-		$info=mysql_fetch_assoc($result);
-		
-		// Set up the variables in the object
-		$this->info=$info;
-		$this->id=$user_id;
-		$this->level=$info['level'];
-	}
+	public $table="users";
+	public $where="id";
 }

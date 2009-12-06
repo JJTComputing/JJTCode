@@ -12,38 +12,10 @@ if (!defined("jjtcode"))
 	die("Hacking Attempt");
 }
  
-class project
+class project extends jjtcode
 {
- 	public $id=0;
- 	public $level=0;
- 	public $info=0;
- 	
- 	private $exists=false;
- 	
- 	function __construct($project_id)
- 	{
- 		// When the object is made, get the information about the project
- 		// from the MySQL database
- 		$query="SELECT * FROM projects WHERE id = '$project_id'";
- 		$result=mysql_query($query);
- 		
- 		// Check whether the project exists
- 		if (mysql_num_rows($result)==0)
- 		{
- 			$this->exists=false;
- 			return false;
- 		}
- 		
- 		// But if it does, load the info up!
- 		$info=mysql_fetch_assoc($result);
- 		
- 		// Set the variables in the object
- 		$this->id=$project_id;
- 		$this->level=$info['default_level'];
- 		$this->info=$info;
- 		
- 		$this->exists=true;
- 	}
+ 	public $table = "projects";
+ 	public $where = "id";
  	
  	function get_files($directory_id="")
  	{
@@ -62,7 +34,7 @@ class project
 		return $files;
  	}
  	
- 	function get_directory($directory_id)
+ 	function get_directory($directory_id="")
  	{
  		// Check if the directory id is empty, if not the user wants to load the files in a directory up!
  		if (!empty($directory_id))
@@ -93,7 +65,7 @@ class project
 		else
 		{
 			echo 2;
-			$level=$this->level;
+			$level=$this->info['level'];
 		}
 		
 		return $level;
