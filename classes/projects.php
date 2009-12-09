@@ -5,6 +5,12 @@
  * 
  * Purpose:
  * To contain the classes for projects
+ * 
+ * Function:
+ * __construct()
+ * (This is inherited from the jjtcode class)
+ * This loads up all the information about the project from the MySQL database
+ * 
  */
  
 if (!defined("jjtcode"))
@@ -50,10 +56,10 @@ class project extends jjtcode
 		return $directory;
  	}
  	
- 	function get_level($user)
+ 	function get_level($user_id)
  	{
 		// Check whether this user has any special permissions for this project
-		$query="SELECT * FROM project_users WHERE user_id = '$user->id' AND project_id = '$this->id'";
+		$query="SELECT * FROM project_users WHERE user_id = '$user_id' AND project_id = '$this->id'";
 		$result=mysql_query($query);
 
 		// If there are special permissions, use them!

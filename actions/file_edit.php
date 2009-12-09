@@ -8,11 +8,15 @@ if (!defined("jjtcode"))
 $file_id = trim($_REQUEST['file_id']);
 $file_id = preg_replace("[^0-9]", "", $file_id);
 
-// Load all the file information from the MySQL database
-$query = "SELECT * FROM files WHERE file_id = '$file_id'";
-$result = mysql_query($query);
-$file = mysql_fetch_assoc($result);
-$level = get_project_level($_SESSION['user_id'], $file['project_id']);
+// Load up the file and the project objects
+require("classes/files.php");
+require("classes/projects.php");
+
+$file = new file($file_id);
+$project = new project($file->info['project_id']);
+
+// Get the level
+$level = $project->get_level($user->id);
 
 if ($level<=2)
 {
@@ -23,7 +27,7 @@ if ($level<=2)
 	<?php
 }
 // If the file is a binary, we can't edit it, so don't let them!
-elseif ($file['binary']==1)
+elseif ($file->info['binary']==1)
 {
 	?>
 	<h2>Error</h2>
@@ -39,7 +43,7 @@ else
 	<script language="javascript" type="text/javascript">
 		editAreaLoader.init({
 		id : "textarea"		// textarea id
-		,syntax: "<?php echo $file['extension']; ?>"			// syntax to be uses for highgliting
+		,syntax: "<?php echo $file->info['extension']; ?>"			// syntax to be uses for highgliting
 		,start_highlight: true	
 			// to display with highlight mode on start-up
 	}); 

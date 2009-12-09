@@ -24,8 +24,8 @@ class jjtcode
 		$query="SELECT * FROM $this->table WHERE $this->where = '$id' ";
 		$result=mysql_query($query);
 		
-		// Make sure the query exists
-		if (mysql_num_rows($result)==0)
+		// Make sure the query exists, and that the user has actually passed something to the function
+		if (mysql_num_rows($result)==0 || empty($id))
 		{
 			// And if it doesn't, return false
 			return false;

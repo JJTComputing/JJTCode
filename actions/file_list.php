@@ -1,4 +1,16 @@
 <?php
+/* file_list - JJTCode
+ * 
+ * Purpose:
+ * To show all the files in a project as long as the user has sufficient permissions to do so
+ * 
+ * Recevies From:
+ * 1. project_view = project_id via GET
+ * 2. project_list = project_id via GET
+ * 
+ * Sends to:
+ * 
+ */
 if (!defined("jjtcode"))
 {
   die("Hacking Attempt!");
@@ -10,9 +22,9 @@ require("classes/projects.php");
 $project_id = preg_replace("[^0-9]", "", $_GET['project_id']);
 $project = new project($project_id);
 
-// Get the level of the user, but since we've already validated the project_id we don't need the function to do it again!
-$level = $project->get_level($user);
-echo $level;
+// Get the level of the user
+$level = $project->get_level($user->id);
+
 if (is_bool($project))
 {
 	// If the project does not exist, tell them!
@@ -44,7 +56,7 @@ else
 	
 	$files = $project->get_files();
 	$directory = $project->get_directory();
-	
+
 	// If there are no files in the project, we will get an error with the foreach loop, so we'll stop that now!
 	if (!is_bool($files))
 	{
@@ -130,6 +142,7 @@ else
 	// If there are no files, tell the user!
 	else
 	{
+		echo '<h2>Error</h2>';
 		echo '<h3>There are no files in this project/directory.</h3>';
 	}
 	

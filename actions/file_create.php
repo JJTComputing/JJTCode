@@ -49,8 +49,7 @@ else
 
 	<br />
 
-	<textarea id="textarea" style="width:900px; height:600px;" name="content"> 
-	</textarea>
+	<textarea id="textarea" style="width:900px; height:600px;" name="content"></textarea>
 
 	<br />
 

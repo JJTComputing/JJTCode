@@ -12,7 +12,18 @@ if (!defined("jjtcode"))
 
 class file extends jjtcode 
 {
-	public $id;
-	public $content;
+	// MySQL files
+	public $table="files";
+	public $where="file_id";
+	
+	function edit_file($content)
+	{
+		// Do the SQL query
+		$query="UPDATE files SET content='$content' AND last_modified = 'time()' WHERE id = '$this->id'";
+		$result=mysql_query($query);
+		
+		// Return whether it was successful
+		return $result;
+	}
 }
 ?>

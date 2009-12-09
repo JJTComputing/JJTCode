@@ -4,37 +4,62 @@ if (!defined("jjtcode"))
   die("Hacking Attempt!");
 }
 
+// Load up the objects
+require("classes/projects.php");
+require("classes/files.php");
+
 if (!isset($_REQUEST['project_id']))
 {
 	// Validate the file_id!
-	$file_id = trim($_REQUEST['file_id']);
-	$file_id = preg_replace("[^0-9]", "", $file_id);
+	$file_id = preg_replace("[^0-9]", "", $_POST['project_id']);
 
-	// Get the project id using the file id
-	$query="SELECT project_id FROM files WHERE file_id = '$_REQUEST[file_id]'";
-	$result=mysql_query($query);
-	$project_id=mysql_result($result, 0, "project_id");
+	// Create the file object using the file_id, and then create the project object using
+	// the project_id from the file object
+	$file = new file($file_id);
+	$project = new project($file->info['project_id']);
+	
+	// Save some memory
+	unset($file_id);
 }
 
 else
 {
-	// Get the project_id and validate it while we're here!
-	$project_id = trim($_REQUEST['project_id']);
-	$project_id = preg_replace("/[^a-zA-Z0-9]/", "", $project_id);
+	// Get the project_id, validate it, and create the object
+	$project_id = preg_replace("/[^a-zA-Z0-9]/", "", $_POST['project_id']);
+	$project = new project($project_id);
+	
+	// Save some memory
+	unset($project_id);
 }
 
 // Its generally used for something
 $time=time();
 
 // Load up the level!
-$level = get_project_level($_SESSION['user_id'], $project_id, false);
+$level = $project->get_level($user->id);
 
 if ($level<=2)
 {
 	// If they aren't allowed to view the project, tell them!
 	?>
 	<h2>Error</h2>
-	<h3>Sorry you are not allowed to edit this project!</h3>
+	<h3>You are not allowed to edit this project!</h3>
+	<?php
+}
+// Check whether the project exists
+elseif (!$project)
+{
+	?>
+	<h2>Error</h2>
+	<h3>The project does not exist!</h3>
+	<?php
+}
+// If the file object is set, check whether the file exists
+elseif (isset($file) && !$file)
+{
+	?>
+	<h2>Error</h2>
+	<h3>The file does not exist!</h3>
 	<?php
 }
 
@@ -85,15 +110,6 @@ else
 			$directory="NULL";
 		}
 		
-		// Check whether the project actually exists
-		$query="SELECT * FROM projects WHERE id = '$project_id'";
-		$result=mysql_query($query);
-		
-		if (mysql_num_rows($result)==0)
-		{
-			$error.="The project you wish to insert the file in does not exist! ";
-		}
-		
 		// If the error has been set, then an error has occured so we don't go any futher!
 		if (isset($error))
 		{
@@ -108,24 +124,22 @@ else
 			{
 				$binary=0;
 			}
-		
-
-			
+	
 			// Insert data into MySQL
-			$query="INSERT INTO files VALUES ('$filename', '$filetype', '$content', '$time', '$project_id', $directory, $binary, NULL)";
+			$query="INSERT INTO files VALUES ('$filename', '$filetype', '$content', '$time', '$project->id', '$directory', '$binary', NULL)";
 			$result=mysql_query($query);
 			echo mysql_error();
 			
 			// Update the 'last_modified'
-			$query="UPDATE projects SET last_modified = '$time' WHERE id = '$project_id'";
+			$query="UPDATE projects SET last_modified = '$time' WHERE id = '$project->id'";
 			mysql_query($query);
 			// End insert data
 	
 			// Get the file_id from the MySQL database for the redirect
-			$query="SELECT file_id FROM files WHERE filename = '$filename' AND extension='$filetype' AND project_id='$project_id'";
+			$query="SELECT id FROM files WHERE filename = '$filename' AND extension='$filetype' AND project_id='$project->id'";
 			$result=mysql_query($query);
 			
-			$file_id=mysql_result($result, 0, "file_id");
+			$file_id=mysql_result($result, 0, "id");
 			
 			// Redirect the user to the file edit!
 			?>
@@ -140,29 +154,18 @@ else
 	elseif ($_REQUEST['do']=="edit")
 	{
 		// Load the variables
-		$content=$_POST['content'];
+		$content=addslashes($_POST['content']);
 		
 		// End validation
 	
 		// Insert data into MySQL
-		$query="UPDATE files SET content='$content', last_modified=NULL WHERE file_id='$file_id'";
-		$result=mysql_query($query);
-		echo mysql_error();
-		// End insert data
+		$file->edit_file($content);
 	
-		// Update the 'last_modified'
-		$query="SELECT project_id FROM files WHERE file_id='$file_id'";
-		$result=mysql_query($query);
-		$project_id=mysql_result($result, 0, "project_id");
-	
-		$query="UPDATE projects SET last_modified = '$time' WHERE id = '$project_id'";
-		mysql_query($query);
-		// End insert data
 		?>
 		<script language="javascript" type="text/javascript">
-		window.location = "/?action=file_edit&file_id=<?php echo $file_id; ?>";
+		window.location = "/?action=file_edit&file_id=<?php echo $file->id; ?>";
 		</script>
-		<noscript>Please click <a href="/?action=file_edit&amp;file_id=<?php echo $file_id; ?>">here</a> to continue.</noscript>
+		<noscript>Please click <a href="/?action=file_edit&amp;file_id=<?php echo $file->id; ?>">here</a> to continue.</noscript>
 		<?php
 	}
 }
