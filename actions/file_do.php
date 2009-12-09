@@ -125,29 +125,25 @@ else
 				$binary=0;
 			}
 	
-			// Insert data into MySQL
-			$query="INSERT INTO files VALUES ('$filename', '$filetype', '$content', '$time', '$project->id', '$directory', '$binary', NULL)";
-			$result=mysql_query($query);
-			echo mysql_error();
-			
-			// Update the 'last_modified'
-			$query="UPDATE projects SET last_modified = '$time' WHERE id = '$project->id'";
-			mysql_query($query);
-			// End insert data
+			// Put into database using class function
+			$sucess=$project->create_file($filename, $extension, $content, $directory, $binary);
 	
-			// Get the file_id from the MySQL database for the redirect
-			$query="SELECT id FROM files WHERE filename = '$filename' AND extension='$filetype' AND project_id='$project->id'";
-			$result=mysql_query($query);
-			
-			$file_id=mysql_result($result, 0, "id");
-			
-			// Redirect the user to the file edit!
-			?>
-			<script language="javascript" type="text/javascript">
-			window.location = "/?action=file_edit&file_id=<?php echo $file_id; ?>";
-			</script>
-			<noscript>Please click <a href="/?action=file_edit&file_id=<?php echo $file_id; ?>">here</a> to continue</noscript>
-			<?php
+			// Check whether everything went well
+			if (!$sucess)
+			{
+				echo '<h2>Error</h2>';
+				echo '<h3>An error has occured. Your file may not have been created properly.</h3>';
+			}
+			else
+			{
+				// Redirect the user to the list of the project files
+				?>
+				<script language="javascript" type="text/javascript">
+				window.location = "/?action=file_list&project_id=<?php echo $project->id; ?>";
+				</script>
+				<noscript>Please click <a href="/?action=file_list&project_id=<?php echo $project->id; ?>">here</a> to continue</noscript>
+				<?php
+			}
 		}
 	}
 	

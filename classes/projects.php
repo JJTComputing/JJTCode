@@ -93,5 +93,22 @@ class project extends jjtcode
 		
 		return $level;
  	}
+ 	
+ 	function create_file($filename, $extension, $content, $directory, $binary=0)
+ 	{
+ 		// Time
+ 		$time=time();
+ 		
+ 		// Insert data into MySQL
+		$query="INSERT INTO files VALUES ('$filename', '$filetype', '$content', '$time', '$this->id', '$directory', '$binary', NULL)";
+		$result=mysql_query($query);
+		
+		// Update the last modified of the project
+		$query="UPDATE projects SET last_modified = '$time' WHERE id = '$this->id'";
+		mysql_query($query);
+		
+		// Tell the user how it went!
+		return $result;
+ 	}
 }
 ?>

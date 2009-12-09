@@ -78,14 +78,14 @@ else
 			// to!
 			if ($value['binary']==0)
 			{
-				echo '<td class="action"><a href="/?action='.($level >= 3 ? "file_edit" : "file_view").'&amp;file_id='.$value['file_id'].'" class="edit">'.$value['filename'].'.'.$value['extension'].'</a></td>';
+				echo '<td class="action"><a href="/?action='.($level >= 3 ? "file_edit" : "file_view").'&amp;file_id='.$value['id'].'" class="edit">'.$value['filename'].'.'.$value['extension'].'</a></td>';
 			}
 			else
 			{
 				echo '<td class="action"><a>'.$value['filename'].'.'.$value['extension'].'</a></td>';
 			}
 			
-			echo '<td>'.date("r", strtotime($value['last_modified'])).'</td>';
+			echo '<td>'.date("r", $value['last_modified']).'</td>';
 			echo '<td class="action"><a href="/download.php?file_id='.$value['file_id'].'" class="view">Download</a></td>';
 		
 			// If the level is enough to edit and delete files, give them the option!
