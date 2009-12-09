@@ -6,10 +6,27 @@
  * Purpose:
  * To contain the classes for projects
  * 
- * Function:
- * __construct()
+ * Functions:
+ * bool __construct()
  * (This is inherited from the jjtcode class)
- * This loads up all the information about the project from the MySQL database
+ * This loads up all the information about the project from the MySQL database. Returns false
+ * if the project does not exist
+ * 
+ * array get_files($directory_id="")
+ * Uses the JJTSQL libraries to return a list of the files in a project in the form: $files[file_id][information].
+ * If you specify a directory_id, it will return a list of the files in that directory, if you do not,
+ * it will return a list of the files in a project without directory (e.g. directory_id = NULL)
+ * 
+ * array get_directory($directory_id="")
+ * Pretty much the same code as get_files. Uses the JJTSQL libraries to return a list of directories in a
+ * project in the form: $directory[directory_id][information] 
+ * If you specify a directory_id, it will return a list of the directories in that directory, if you do not,
+ * it will return a list of the directories in a project without directory (e.g. directory_id = NULL)
+ * 
+ * int get_level($user_id)
+ * Using the user_id it fetches the user's level for the particular project and returns it. It is the same
+ * as get_project_level() 
+ * 
  * 
  */
  
