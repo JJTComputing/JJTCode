@@ -4,11 +4,15 @@
  * Purpose:
  * To contain the classes to do with the user's info and modfying their permissions
  * 
+ * Functions:
+ * __construct($id)
+ * Loads up the class and sets up all the variables
+ * 
  * Notes:
  * Due to the possibilty of guests who do not have a user_id, this class has to have its own constructor 
  * and so cannot inherit off the jjtcode class, despite sharing a large amount of code.
  * 
- * There is also some columns that don't need loading up, such as the password column 
+ * 
  */
  
 if (!defined("jjtcode"))

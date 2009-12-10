@@ -49,12 +49,12 @@ else
 	}); 
 	</script>
 	<form class="jNice" action="/" method="POST">
-	<h3><?php echo $file['filename'].'.'.$file['extension'].'</h3>'; ?>
-	<textarea style="width:900px; height:600px;  text-indent:0px;" id="textarea" name="content"><?php echo $file['content']; ?></textarea>
+	<h3><?php echo $file->info['filename'].'.'.$file->info['extension'].'</h3>'; ?>
+	<textarea style="width:900px; height:600px;  text-indent:0px;" id="textarea" name="content"><?php echo $file->info['content']; ?></textarea>
 	<input type="submit" value="Edit" />
 	<input type="hidden" name="action" value="file_do" />
 	<input type="hidden" name="do" value="edit" />
-	<input type="hidden" name="file_id" value="<?php echo $file['file_id']; ?>" />
+	<input type="hidden" name="file_id" value="<?php echo $file->info['id']; ?>" />
 	</form>
 	<?php
 }

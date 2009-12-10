@@ -11,7 +11,7 @@ require("classes/files.php");
 if (!isset($_REQUEST['project_id']))
 {
 	// Validate the file_id!
-	$file_id = preg_replace("[^0-9]", "", $_POST['project_id']);
+	$file_id = preg_replace("[^0-9]", "", $_POST['file_id']);
 
 	// Create the file object using the file_id, and then create the project object using
 	// the project_id from the file object

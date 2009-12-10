@@ -14,12 +14,12 @@ class file extends jjtcode
 {
 	// MySQL files
 	public $table="files";
-	public $where="file_id";
+	public $where="id";
 	
 	function edit_file($content)
 	{
 		// Do the SQL query
-		$query="UPDATE files SET content='$content' AND last_modified = 'time()' WHERE id = '$this->id'";
+		$query="UPDATE files SET content='$content', last_modified = 'time()' WHERE id = '$this->id'";
 		$result=mysql_query($query);
 		
 		// Return whether it was successful
