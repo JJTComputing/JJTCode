@@ -18,8 +18,9 @@ class file extends jjtcode
 	
 	function edit_file($content)
 	{
+		$time = time();
 		// Do the SQL query
-		$query="UPDATE files SET content='$content', last_modified = 'time()' WHERE id = '$this->id'";
+		$query="UPDATE files SET content='$content', last_modified = '$time' WHERE id = '$this->id'";
 		$result=mysql_query($query);
 		
 		// Return whether it was successful

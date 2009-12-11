@@ -16,6 +16,9 @@
 // Start the session!
 session_start();
 
+// Set the time
+date_default_timezone_set('UTC'); 
+
 define("jjtcode", 0.1);
 // Load up all the function requires
 require("sources/jjtsql.php");

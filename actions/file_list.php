@@ -45,13 +45,8 @@ elseif ($level<=0)
 
 else
 {	
-	// If they can view the project, lets do it!
-	
-	// Load up the files from the MySQL database
-	/* Due to the introduction of directories, we need to do this with a few conditionals.
-	 * If the directory_id is NULL, then the file/directory belongs in the root of the project. 
+	/* If they can view the project, use the $project object to fetch
 	 * 
-	 * But if we have a directory_id sent, then they want to view the directory, so we load that instead!
 	 * */
 	
 	$files = $project->get_files();
@@ -86,12 +81,12 @@ else
 			}
 			
 			echo '<td>'.date("r", $value['last_modified']).'</td>';
-			echo '<td class="action"><a href="/download.php?file_id='.$value['file_id'].'" class="view">Download</a></td>';
+			echo '<td class="action"><a href="/download.php?file_id='.$value['id'].'" class="view">Download</a></td>';
 		
 			// If the level is enough to edit and delete files, give them the option!
 			if ($level >= 3 )
 			{
-				echo '<td class="action"><a href="/?action=file_delete&amp;file_id='.$value['file_id'].'" class="delete">Delete</a></td>';
+				echo '<td class="action"><a href="/?action=file_delete&amp;file_id='.$value['id'].'" class="delete">Delete</a></td>';
 			}
 			echo '</tr>';
 		}
