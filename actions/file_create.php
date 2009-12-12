@@ -31,8 +31,8 @@ else
 
 	<form method="POST" action="/" name="filetype" class="jNice">
 	<fieldset>
-	Filename: <input type="text" name="filename" class="text-long" /> 
-	<input type="text" name="filetype" class="text-small" /><!--<select name="filetype">
+	Filename: <br /><input type="text" name="filename" class="text-long" /> 
+	<input type="text" name="extension" class="text-small" /><!--<select name="filetype">
 	<option value="html">HTML</option>
 	<option value="css">CSS</option>
 	<option value="javascript">Javascript</option>

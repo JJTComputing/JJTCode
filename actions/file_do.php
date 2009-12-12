@@ -4,10 +4,6 @@ if (!defined("jjtcode"))
   die("Hacking Attempt!");
 }
 
-// Load up the objects
-require("classes/projects.php");
-require("classes/files.php");
-
 if (!isset($_REQUEST['project_id']))
 {
 	// Validate the file_id!
@@ -71,9 +67,9 @@ else
 		// Validate and load the variables
 		
 		// Filetype
-		if (!empty($_POST['filetype']))
+		if (!empty($_POST['extension']))
 		{
-			$filetype=preg_replace("/[^a-zA-Z0-9\s]/", "", trim($_POST['filetype']));
+			$extension=preg_replace("/[^a-zA-Z0-9\s]/", "", $_POST['extension']);
 		}
 		else
 		{

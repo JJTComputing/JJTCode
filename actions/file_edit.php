@@ -8,10 +8,7 @@ if (!defined("jjtcode"))
 $file_id = trim($_REQUEST['file_id']);
 $file_id = preg_replace("[^0-9]", "", $file_id);
 
-// Load up the file and the project objects
-require("classes/files.php");
-require("classes/projects.php");
-
+// Load up the objects
 $file = new file($file_id);
 $project = new project($file->info['project_id']);
 

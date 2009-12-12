@@ -25,7 +25,6 @@ require("sources/jjtsql.php");
 require("sources/sql.php");
 require("sources/functions.php");
 require("classes/class.php");
-require("classes/users.php");
 
 // If the person is not logged in, they are a guest and so we give them a user id of 0
 if (!login_check())

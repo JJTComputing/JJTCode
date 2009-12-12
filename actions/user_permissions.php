@@ -57,7 +57,7 @@ else
 	for ($i=0;$i<$num;$i++)
 	{
 		$name=mysql_result($result, $i, "project_id");
-		$user[$name]=mysql_result($result, $i, "level"); // Load up the column into the array using the name column
+		$edit[$name]=mysql_result($result, $i, "level"); // Load up the column into the array using the name column
 	}
 	
 	// Save some memory
@@ -79,10 +79,10 @@ else
 		echo '<select name="level">';
 		echo '<option>';
 		// If the project_id exists in the array, the user has a specific level, but if not we go to the default level
-		if (isset($user[$value['id']]))
+		if (isset($edit[$value['id']]))
 		{
-			echo $user[$value['id']];
-			$level=$user[$value['id']];
+			echo $edit[$value['id']];
+			$level=$edit[$value['id']];
 		}
 		else
 		{

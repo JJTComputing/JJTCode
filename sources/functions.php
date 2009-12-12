@@ -162,3 +162,7 @@ function message_send($user_id_to, $user_id_from, $title, $content)
 	}
 }
 
+function __autoload($class)
+{
+	require_once("classes/".$class.".php");
+}

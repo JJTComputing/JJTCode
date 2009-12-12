@@ -16,8 +16,6 @@ if (!defined("jjtcode"))
   die("Hacking Attempt!");
 }
 
-require("classes/projects.php");
-
 // Validate the project id, because it is used a lot for MySQL
 $project_id = preg_replace("[^0-9]", "", $_GET['project_id']);
 $project = new project($project_id);
